@@ -125,7 +125,7 @@ export default Ember.Component.extend({
         interpolation = this.get('interpolation');
 
     return d3.svg.line()
-      .x(function(d, i) {
+      .x(function(d) {
         return x(new Date(d.x));
       })
       .y(function(d) {

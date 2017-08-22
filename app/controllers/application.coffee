@@ -30,9 +30,6 @@ ApplicationController = Ember.Controller.extend
     @genData()
     @setVisibleSubChart('Gender')
 
-    # @set('fullWidth', $(window).width())
-    # @set('detailChartWidth', $('#detail-chart-panel').width())
-
   genData: ->
     data = []
     now = new Date()
