@@ -1,50 +1,27 @@
-# flu-dash
+# Fly Dash
 
-This README outlines the details of collaborating on this Ember application.
-A short introduction of this app could easily go here.
+An Ember and D3 based dashboard.
+Various quantities of data can be generated right in the client and consumed by the dashboard.
 
-## Prerequisites
+![Application screenshot](/screenshot_flu_dash.jpg)
 
-You will need the following things properly installed on your computer.
+## Why?
 
-* [Git](https://git-scm.com/)
-* [Node.js](https://nodejs.org/) (with NPM)
-* [Ember CLI](https://ember-cli.com/)
-* [PhantomJS](http://phantomjs.org/)
+I used it briefly for testing / optimizing Ember chart components. It may not win any design awards but it made a nice enough demo for a job interview several years ago.
 
-## Installation
+## Install
 
-* `git clone <repository-url>` this repository
-* `cd flu-dash`
-* `npm install`
+```
+git clone https://github.com/jpakulski/flu_dash.git
+cd flu_dash
+npm install && bower install
+ember s
+```
 
-## Running / Development
+## Use
 
-* `ember serve`
-* Visit your app at [http://localhost:4200](http://localhost:4200).
-
-### Code Generators
-
-Make use of the many generators for code, try `ember help generate` for more details
-
-### Running Tests
-
-* `ember test`
-* `ember test --server`
-
-### Building
-
-* `ember build` (development)
-* `ember build --environment production` (production)
-
-### Deploying
-
-Specify what it takes to deploy your app.
-
-## Further Reading / Useful Links
-
-* [ember.js](http://emberjs.com/)
-* [ember-cli](https://ember-cli.com/)
-* Development Browser Extensions
-  * [ember inspector for chrome](https://chrome.google.com/webstore/detail/ember-inspector/bmdblncegkenkacieihfhpjfppoconhi)
-  * [ember inspector for firefox](https://addons.mozilla.org/en-US/firefox/addon/ember-inspector/)
+1. Select the amount of data to generate (default was 100 rows)
+2. Click the "Regenerate X Rows of Data" button to regenerate the data
+3. Drag on the top chart to select a date range
+4. The detail section below will update in real-time based on the date range selected
+5. Click on the "Data" button in the top right corner to view the raw data. **Warning** The data grid is just a table. A million rows of data may not render all that happily.
