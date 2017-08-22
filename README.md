@@ -9,7 +9,7 @@ Various quantities of data can be generated right in the client and consumed by 
 
 I used it briefly for testing / optimizing Ember chart components.
 
-It may not win any design awards but it also made a nice enough demo for a job interview several years ago.
+It may not win any design awards now but it did make a nice enough demo for a job interview several years ago.
 
 ## Install
 
