@@ -7,7 +7,9 @@ Various quantities of data can be generated right in the client and consumed by 
 
 ## Why?
 
-I used it briefly for testing / optimizing Ember chart components. It may not win any design awards but it made a nice enough demo for a job interview several years ago.
+I used it briefly for testing / optimizing Ember chart components.
+
+It may not win any design awards but it also made a nice enough demo for a job interview several years ago.
 
 ## Install
 
@@ -20,8 +22,8 @@ ember s
 
 ## Use
 
-1. Select the amount of data to generate (default was 100 rows)
-2. Click the "Regenerate X Rows of Data" button to regenerate the data
-3. Drag on the top chart to select a date range
-4. The detail section below will update in real-time based on the date range selected
+1. Select the amount of data to generate (default was 100 rows).
+2. Click the "Regenerate X Rows of Data" button to regenerate the data.
+3. Drag on the top chart to select a date range.
+4. The detail section below will update in real-time based on the date range selected.
 5. Click on the "Data" button in the top right corner to view the raw data. **Warning** The data grid is just a table. A million rows of data may not render all that happily.
