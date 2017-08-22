@@ -1,5 +1,231 @@
-{{!-- The following component displays Ember's default welcome message. --}}
-{{welcome-page}}
-{{!-- Feel free to remove this! --}}
+<nav class="navbar navbar-default main-navbar">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Flu Report</a>
+    </div>
 
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        {{#bs-dropdown tagName="li" as |dd|}}
+          {{#dd.toggle}}Quantity of Data: {{dataCount}} <span class="caret"></span>{{/dd.toggle}}
+          {{#dd.menu as |menu|}}
+            {{#each quantitiesOfData as |quantity|}}
+              {{#menu.item}}
+                <a value={{quantity}} {{action 'setDataCount' quantity}}>{{quantity}} Rows</a>
+              {{/menu.item}}
+            {{/each}}
+          {{/dd.menu}}
+        {{/bs-dropdown}}
+      </ul>
+      <div class="navbar-form navbar-left">
+        <button class="btn btn-success" {{action 'regenerateData'}}>Regenerate {{dataCount}} Rows of Data</button>
+      </div>
+      <ul class="nav navbar-nav navbar-right">
+        <li class={{if isReportVisible 'active'}}><a href="#report" {{action 'showReport'}}>Report</a></li>
+        <li class={{if isReportVisible '' 'active'}}><a href="#data" {{action 'showData'}}>Data</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  {{#if isReportVisible}}
+    <div class="flu-panel">
+      <div id="index-chart" class="index-chart">
+        <section>
+          <h2>
+            Flu Vs. Time
+            <i class="info glyphicon glyphicon-question-sign" data-toggle="tooltip" data-placement="top">
+              {{#bs-tooltip placement="bottom"}}Drag handles to filter your data.{{/bs-tooltip}}
+            </i>
+            <span class="selected-dates">Date Range: {{format-date selectedFrom}} - {{format-date selectedTo}}</span>
+          </h2>
+          {{d3-line-chart
+            data=timeVsCasesOfTheFlu
+            selectedFrom=selectedFrom
+            selectedTo=selectedTo
+            height=160
+            yTicks=4
+            xTicks=12}}
+        </section>
+      </div>
+    </div>
+
+    <div class="flu-panel summary">
+      <span class="summary-item">
+        <span class="pre">Total</span>
+        <span class="val">{{totalInSelection}}</span>
+      </span>
+      <span class="summary-item">
+        <span class="pre">Women</span>
+        <span class="val">{{genderVsCasesOfTheFlu.1.y}}</span>
+      </span>
+      <span class="summary-item">
+        <span class="pre">Men</span>
+        <span class="val">{{genderVsCasesOfTheFlu.0.y}}</span>
+      </span>
+      <span class="summary-item">
+        <span class="pre">Children</span>
+        <span class="val">{{ageVsCasesOfTheFlu.0.y}}</span>
+      </span>
+      <span class="summary-item">
+        <span class="pre">Elderly</span>
+        <span class="val">{{ageVsCasesOfTheFlu.5.y}}</span>
+      </span>
+    </div>
+
+    <div class="flu-panel flex">
+      <section id="additional-info-panel" class="col small">
+        <h4>Flu Vs. {{visibleSubChartTitle}}</h4>
+        <ul class="nav nav-tabs">
+          <li class={{if isFluVsGenderVisible 'active'}}><a href="#gender" {{action 'showFluVsGender'}}>Gender</a></li>
+          <li class={{if isFluVsAgeGroupVisible 'active'}}><a href="#age_group" {{action 'showFluVsAgeGroup'}}>Age Group</a></li>
+          <li class={{if isFluVsOccurrencesVisible 'active'}}><a href="#occurrences" {{action 'showFluVsOccurrences'}}>Occurrences</a></li>
+          <li class={{if isFluVsEthnicityVisible 'active'}}><a href="#ethnicity" {{action 'showFluVsEthnicity'}}>Ethnicity</a></li>
+          <li class={{if isFluVsAlarmsVisible 'active'}}>
+            <a href="#alarms" {{action 'showFluVsAlarms'}}>
+              Alarms
+              {{#if fluAlarms.length}}
+                <span class="badge has-alarm">{{fluAlarms.length}}</span>
+              {{/if}}
+            </a>
+          </li>
+        </ul>
+
+        {{#if isFluVsGenderVisible}}
+          <div class="tab-content">
+            {{d3-pie-chart
+              data=genderVsCasesOfTheFlu
+              width=300
+              height=300
+              outerRadius=140
+              innerRadius=0}}
+          </div>
+        {{/if}}
+
+        {{#if isFluVsAgeGroupVisible}}
+          <div class="tab-content">
+            {{d3-pie-chart
+              data=ageVsCasesOfTheFlu
+              width=300
+              height=300
+              outerRadius=140
+              innerRadius=60}}
+          </div>
+        {{/if}}
+
+        {{#if isFluVsEthnicityVisible}}
+          <div class="tab-content">
+            {{d3-pie-chart
+              data=ethnicityVsCasesOfTheFlu
+              width=300
+              height=300
+              outerRadius=140
+              innerRadius=60}}
+          </div>
+        {{/if}}
+
+        {{#if isFluVsOccurrencesVisible}}
+          <div class="tab-content">
+            {{d3-pie-chart
+              data=fluOccurrences
+              width=300
+              height=300
+              outerRadius=140
+              innerRadius=60}}
+          </div>
+        {{/if}}
+
+        {{#if isFluVsAlarmsVisible}}
+          {{#if fluAlarms.length}}
+            <div class="scroll-panel">
+              <table class="alarms table table-striped">
+                <thead>
+                  <tr>
+                    <th class='name'>Name</th>
+                    <th class='count'>Flu Occurences</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {{#each fluAlarms as |alarm|}}
+                    <tr>
+                      <td class='name'>{{alarm.name}}</td>
+                      <td class='count'>{{alarm.count}}</td>
+                    </tr>
+                  {{/each}}
+                </tbody>
+              </table>
+            </div>
+          {{else}}
+            <h4 class="no-alarms">No Alarms</h4>
+          {{/if}}
+        {{/if}}
+      </section>
+      <section id="detail-chart-panel" class="col big">
+        <h4>Flu Vs. Time Detail</h4>
+        <div class="stats">
+          <div class="item">
+            <span class="item-label">Min:</span>
+            <span class="value">{{min}}</span>
+          </div>
+          <div class="item">
+            <span class="item-label">Average:</span>
+            <span class="value">{{average}}</span>
+          </div>
+          <div class="item">
+            <span class="item-label">Max:</span>
+            <span class="value">{{max}}</span>
+          </div>
+          <div class="item">
+            <span class="item-label">Variance:</span>
+            <span class="value">{{variance}}</span>
+          </div>
+        </div>
+        {{d3-line-chart
+          data=timeVsCasesOfTheFluDetail
+          interpolation='monotone'
+          width=detailChartWidth
+          height=330
+          hasSelect=false
+          yTicks=10
+          xTicks=5}}
+      </section>
+    </div>
+  {{else}}
+    <div class="row">
+      <div class="col-md-12">
+        <section class="data-grid">
+          <table class="table table-striped">
+            <thead>
+              <th>Patient Name</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Ethnicity</th>
+              <th>Location</th>
+              <th>High Risk Location?</th>
+              <th>Doctor</th>
+              <th>Flu Shot?</th>
+              <th>Diagnosis Date</th>
+            </thead>
+            <tbody>
+              {{#each data as |row|}}
+                <tr>
+                  <td>{{row.patient.name}}</td>
+                  <td>{{row.patient.gender}}</td>
+                  <td>{{row.patient.age}}</td>
+                  <td>{{row.patient.ethnicity}}</td>
+                  <td>{{row.patient.doctor.location.name}}</td>
+                  <td>{{row.patient.doctor.location.isHighRisk}}</td>
+                  <td>{{row.patient.doctor.name}}</td>
+                  <td>{{row.patient.hasFluShot}}</td>
+                  <td>{{format-date row.diagnosisDate}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </section>
+      </div>
+    </div>
+  {{/if}}
+</div>
 {{outlet}}

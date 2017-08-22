@@ -1,0 +1,167 @@
+html,
+body,
+body > .ember-view {
+  height: 100%;
+  margin: 0;
+}
+
+h2,
+h4 {
+  margin: 0 0 20px;
+}
+
+section {
+  margin: 0 0 20px;
+  position: relative;
+}
+
+.main-navbar {
+  position: fixed;
+  z-index: 1;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+}
+
+.main-content {
+  padding-top: 70px;
+}
+
+.data-grid {
+  padding: 20px 15px;
+}
+
+.data-grid th {
+  padding: 8px;
+}
+
+#index-chart {
+  padding: 20px 30px;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex .col {
+  padding: 20px 30px;
+}
+
+.flex .col.big {
+  flex: 1;
+}
+
+.stats {
+  color: #333;
+  font-size: 12px;
+  position: absolute;
+  top: 65px;
+  left: 70px;
+  background: #fff;
+  padding: 10px;
+}
+
+.nav-tabs a {
+  color: #999;
+}
+
+.selected-dates {
+  color: #ddd;
+  margin-left: 10px;
+  font-weight: 200;
+}
+
+td {
+  text-transform: capitalize;
+}
+
+.info {
+  vertical-align: super;
+  color: #999;
+  font-size: 16px;
+}
+
+svg {
+  background: #fff;
+  font: 11px sans-serif;
+}
+
+svg path {
+  fill: none;
+  stroke: #0ce;
+  stroke-width: 1.5px;
+}
+
+.pie-chart path {
+  fill: none;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+.axis line {
+  fill: none;
+  stroke: #eee;
+  shape-rendering: crispEdges;
+}
+
+.axis path {
+  fill: none;
+  stroke: #ccc;
+  stroke-width: 1.5;
+  shape-rendering: crispEdges;
+}
+
+.axis text {
+  fill: #333;
+}
+
+.brush {
+  stroke: #00a0bb;
+  stroke-width: 2;
+  fill: #00a0bb;
+  fill-opacity: 0.1;
+  shape-rendering: crispEdges;
+}
+
+.summary {
+  background: #000;
+  padding: 16px 30px;
+  margin: 0 0 40px;
+}
+
+.summary .summary-item {
+  font-size: 18px;
+  font-weight: 400;
+  margin-right: 30px;
+  color: #fff;
+}
+
+.summary .summary-item .pre {
+  color: #999;
+  margin-right: 5px;
+}
+
+.no-alarms {
+  color: #5cb85c;
+  text-align: center;
+  margin-top: 50px;
+}
+
+.has-alarm {
+  background: red;
+  font-size: 12px;
+  position: absolute;
+  top: -5px;
+  right: -15px;
+  border-radius: 3px;
+  font-weight: 400;
+}
+
+.scroll-panel {
+  height: 290px;
+  overflow: scroll;
+}
+
+.tab-content {
+  text-align: center;
+}
